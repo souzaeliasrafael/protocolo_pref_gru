@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefeitura de Guarulhos</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+        .logo-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .logo-container img {
+            max-width: 300px;
+        }
+        .menu-bar {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu-bar a {
+            color: #000;
+            text-decoration: none;
+        }
+        /* Estilo para submenus */
+        .dropdown-submenu {
+            position: relative;
+        }
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-left: 0.1rem;
+            margin-top: -0.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Menu -->
+    <nav class="navbar navbar-expand-lg menu-bar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Protocolo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="documentosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Documentos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="documentosDropdown">
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#processoAdministrativoModal">Processo Administrativo</a></li>
+                        
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="guiaRemessaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Guia de Remessa
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="guiaRemessaDropdown">
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#geracaoGuiaModal">Geração</a></li>
+                            
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#andamentoLotePAModal">Andamento em Lote de PA</a></li>
+                            
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">Recebimento</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#recebimentoOnlineModal">On-Line</a></li>
+                                    
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#baseDeDadosModal">Base de Dados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#alertasModal">Alertas</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutButton">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Logotipo -->
+    <div class="logo-container">
+        <img src="guarulhos-logo.png" alt="Prefeitura de Guarulhos">
+        <h1>Prefeitura de Guarulhos</h1>
+        <p>Administração e Modernização</p>
+    </div>
+
+    <!<!-- Modal para Processo Administrativo -->
+    <div class="modal fade" id="processoAdministrativoModal" tabindex="-1" aria-labelledby="processoAdministrativoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="processoAdministrativoModalLabel">Processo Administrativo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Botões superiores -->
+                    <div class="btn-group mb-3">
+                        <button type="button" class="btn btn-primary">Pesquisa</button>
+                        <button type="button" class="btn btn-secondary">Limpar</button>
+                        <button type="button" class="btn btn-success" onclick="window.print()">Imprimir</button>
+                    </div>
+                    <!-- Formulário -->
+                    <form>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="numeroDocumento" class="form-label">Nº do Documento</label>
+                                <input type="text" class="form-control" id="numeroDocumento" value="1629">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ano" class="form-label">Ano</label>
+                                <input type="text" class="form-control" id="ano" value="2006">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="dataEntrada" class="form-label">Data de Entrada</label>
+                                <input type="date" class="form-control" id="dataEntrada" value="2006-01-16">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="hora" class="form-label">Hora</label>
+                                <input type="time" class="form-control" id="hora" value="13:38:21">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="abertoPor" class="form-label">Aberto por</label>
+                                <input type="text" class="form-control" id="abertoPor" value="M - MEMORANDO">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="requerente" class="form-label">Requerente</label>
+                                <input type="text" class="form-control" id="requerente" value="58164 - DEPARTAMENTO DE ASSUNTOS JURÍDICOS INTERNOS SJ">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="representantes" class="form-label">Representantes</label>
+                                <input type="text" class="form-control" id="representantes">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="unidadeCriadora" class="form-label">Unidade Criadora</label>
+                                <input type="text" class="form-control" id="unidadeCriadora" value="SJ14##">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="destinoInicial" class="form-label">Destino Inicial</label>
+                                <input type="text" class="form-control" id="destinoInicial" value="SJ## - SECRETARIA DE ASSUNTOS JURÍDICOS">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="assunto" class="form-label">Assunto</label>
+                                <input type="text" class="form-control" id="assunto" value="91 - EXECUÇÃO FISCAL">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prazo" class="form-label">Prazo de Vencimento</label>
+                                <input type="date" class="form-control" id="prazo">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="complAssunto" class="form-label">Compl. Assunto</label>
+                                <textarea class="form-control" id="complAssunto" rows="2">23374/96 MOVIDO CONTRA DMO S/A COMERCIO EXPORTAÇÃO IMPORTAÇÃO</textarea>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="inscCadastral" class="form-label">Insc. Cadastral</label>
+                                <input type="text" class="form-control" id="inscCadastral">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="inscMunicipal" class="form-label">Insc. Municipal</label>
+                                <input type="text" class="form-control" id="inscMunicipal">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="volumes" class="form-label">Volume(s)</label>
+                                <input type="number" class="form-control" id="volumes" value="2">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="comentario" class="form-label">Comentário do Documento</label>
+                                <textarea class="form-control" id="comentario" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="tabela" class="form-label">Tabela de Andamento</label>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Destino</th>
+                                            <th>Descrição da Unidade</th>
+                                            <th>Telefone</th>
+                                            <th>Envio</th>
+                                            <th>Recebimento</th>
+                                            <th>Guia nº</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>SJU01.08.02</td>
+                                            <td>SEÇÃO ADMINISTRATIVA DE APOIO AO EXECUTIVO FISCAL</td>
+                                            <td>24536800</td>
+                                            <td>12/03/2025</td>
+                                            <td>12/03/2025</td>
+                                            <td>5086</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SJU01.08</td>
+                                            <td>DIVISÃO ADMINISTRATIVA DE ACOMPANHAMENTO</td>
+                                            <td>24536800</td>
+                                            <td>12/03/2025</td>
+                                            <td>12/03/2025</td>
+                                            <td>2841</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="cotaAndamento" class="form-label">Cota do Andamento</label>
+                                <textarea class="form-control" id="cotaAndamento" rows="2">SEGUE PARA PROVIDÊNCIA VOL I E II</textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="enviadoPor" class="form-label">Enviado por</label>
+                                <input type="text" class="form-control" id="enviadoPor" value="DEILSON MELO SOUZA">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="recebidoPor" class="form-label">Recebido por</label>
+                                <input type="text" class="form-control" id="recebidoPor" value="DEILSON MELO SOUZA">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Andamento em Lote de PA -->
+    <div class="modal fade" id="andamentoLotePAModal" tabindex="-1" aria-labelledby="andamentoLotePAModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="andamentoLotePAModalLabel">Andamentos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- Unidade Remetente e Destino -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="unidadeRemetente" class="form-label">Unidade Remetente</label>
+                                <input type="text" class="form-control" id="unidadeRemetente" value="SJU01.08.02 - SEÇÃO ADMINISTRATIVA DE APOIO AO EXECUTIVO FISCAL">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="unidadeDestino" class="form-label">Unidade Destino</label>
+                                <select class="form-select" id="unidadeDestino">
+                                    <option selected>SJU01.08 - DIVISÃO ADMINISTRATIVA DE ACOMPANHAMENTO</option>
+                                    <option>Outra Unidade</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Cota -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="cota" class="form-label">Cota</label>
+                                <textarea class="form-control" id="cota" rows="3">REESCREVO A MINHA COTA</textarea>
+                            </div>
+                        </div>
+                        <!-- Relação de Processos -->
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="numeroProcesso" class="form-label">Número do Processo</label>
+                                <input type="text" class="form-control" id="numeroProcesso" value="1629">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="anoProcesso" class="form-label">Ano</label>
+                                <input type="text" class="form-control" id="anoProcesso" value="2006">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="guia" class="form-label">Guia</label>
+                                <input type="text" class="form-control" id="guia" value="50866">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="dataHora" class="form-label">Data/Hora</label>
+                                <input type="text" class="form-control" id="dataHora" value="12/03/2025 15:11:00">
+                            </div>
+                        </div>
+                        <!-- Tabela de Processos -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="relacaoProcessos" class="form-label">Relação de Processos</label>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nº do PA</th>
+                                            <th>Ano</th>
+                                            <th>Requerente</th>
+                                            <th>Assunto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1629</td>
+                                            <td>2006</td>
+                                            <td>DEPARTAMENTO DE ASSUNTOS JURÍDICOS INTERNOS SJ</td>
+                                            <td>EXECUÇÃO FISCAL - 23374/96 MOVIDO CONTRA DMO S/A</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Total de Processos -->
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <p><strong>Total de Processos:</strong> 1</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal para Geração da Guia de Remessa -->
+     <div class="modal fade" id="geracaoGuiaModal" tabindex="-1" aria-labelledby="geracaoGuiaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="geracaoGuiaModalLabel">Geração da Guia de Remessa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- Tipo de Emissão -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Tipo de Emissão</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="tipoEmissao" id="tipoEmissao1" value="origemDestino" checked>
+                                        <label class="form-check-label" for="tipoEmissao1">Considera unidade origem e destino</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="tipoEmissao" id="tipoEmissao2" value="somenteOrigem">
+                                        <label class="form-check-label" for="tipoEmissao2">Geral considerando somente unidade origem</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Unidade Origem e Destino -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="unidadeOrigem" class="form-label">Unidade Origem</label>
+                                <input type="text" class="form-control" id="unidadeOrigem" value="SJU01.08.02 - SEÇÃO ADMINISTRATIVA DE APOIO AO EXECUTIVO FISCAL">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="unidadeDestino" class="form-label">Unidade Destino</label>
+                                <select class="form-select" id="unidadeDestino">
+                                    <option selected>SJU01.08 - DIVISÃO ADMINISTRATIVA DE ACOMPANHAMENTO</option>
+                                    <option>Outra Unidade</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Datas e Guia -->
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="dataInicial" class="form-label">Data Inicial</label>
+                                <input type="date" class="form-control" id="dataInicial" value="2025-03-12">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="dataFinal" class="form-label">Data Final</label>
+                                <input type="date" class="form-control" id="dataFinal" value="2025-03-13">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="hora" class="form-label">Hora</label>
+                                <input type="time" class="form-control" id="hora" value="15:15:37">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="numeroGuia" class="form-label">Nº Guia</label>
+                                <input type="text" class="form-control" id="numeroGuia">
+                            </div>
+                        </div>
+                        <!-- Tabela de Documentos -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="tabelaDocumentos" class="form-label">Documentos</label>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Documento</th>
+                                            <th>Número</th>
+                                            <th>Ano</th>
+                                            <th>Requerente</th>
+                                            <th>Marcar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="5" class="text-center">Nenhum documento encontrado</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Botão de Pesquisa -->
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <button type="button" class="btn btn-primary">Pesquisar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Recebimento On-Line -->
+    <div class="modal fade" id="recebimentoOnlineModal" tabindex="-1" aria-labelledby="recebimentoOnlineModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recebimentoOnlineModalLabel">Recebimento de Guia de Remessa - Informatizados</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- Guia e Data -->
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="numeroGuia" class="form-label">Nº Guia</label>
+                                <input type="text" class="form-control" id="numeroGuia">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="anoGuia" class="form-label">Ano da Guia</label>
+                                <input type="text" class="form-control" id="anoGuia" value="2025">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="dataRecebimento" class="form-label">Data de Recebimento</label>
+                                <input type="date" class="form-control" id="dataRecebimento" value="2025-03-13">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="horaRecebimento" class="form-label">Hora</label>
+                                <input type="time" class="form-control" id="horaRecebimento" value="15:21:20">
+                            </div>
+                        </div>
+                        <!-- Unidade de Recebimento e Remetente -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="unidadeRecebimento" class="form-label">Unidade de Recebimento</label>
+                                <input type="text" class="form-control" id="unidadeRecebimento" value="SJU01.08.02 - SEÇÃO ADMINISTRATIVA DE APOIO AO EXECUTIVO FISCAL">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="unidadeRemetente" class="form-label">Unidade Remetente</label>
+                                <input type="text" class="form-control" id="unidadeRemetente">
+                            </div>
+                        </div>
+                        <!-- Tabela de Documentos -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="tabelaDocumentos" class="form-label">Documentos à serem recebidos</label>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo de Documento</th>
+                                            <th>Número</th>
+                                            <th>Ano</th>
+                                            <th>Requerente</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4" class="text-center">Nenhum documento encontrado</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Botão de Pesquisa -->
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <button type="button" class="btn btn-primary">Pesquisar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Base de Dados -->
+    <div class="modal fade" id="baseDeDadosModal" tabindex="-1" aria-labelledby="baseDeDadosModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="baseDeDadosModalLabel">Base de Dados</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- Barra de Seleção -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="unidadeOrigem" class="form-label">Unidade de Origem Desejada</label>
+                                <select class="form-select" id="unidadeOrigem">
+                                    <option selected>Escolha uma unidade...</option>
+                                    <option value="Procurador1">Procurador 1</option>
+                                    <option value="Procurador2">Procurador 2</option>
+                                    <option value="Procurador3">Procurador 3</option>
+                                    <option value="Procurador4">Procurador 4</option>
+                                    <option value="Procurador5">Procurador 5</option>
+                                    <option value="Procurador6">Procurador 6</option>
+                                    <option value="Procurador7">Procurador 7</option>
+                                    <option value="Procurador8">Procurador 8</option>
+                                    <option value="Procurador9">Procurador 9</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Botão de Pesquisa -->
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <button type="button" class="btn btn-primary" onclick="pesquisar()">Pesquisar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Alertas -->
+    <div class="modal fade" id="alertasModal" tabindex="-1" aria-labelledby="alertasModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertasModalLabel">Alertas Recebidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="alertasContainer">
+                        <!-- Lista de alertas será carregada aqui dinamicamente -->
+                        <p class="text-center text-muted">Nenhum alerta recebido.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function pesquisar() {
+            const unidade = document.getElementById('unidadeOrigem').value;
+            if (unidade && unidade !== "Escolha uma unidade...") {
+                alert(`Pesquisa realizada para: ${unidade}`);
+            } else {
+                alert("Por favor, selecione uma unidade.");
+            }
+        }
+
+        // Simulação de chegada de novos dados no banco de dados
+        const alertas = [
+            "Novo documento recebido na unidade SJU01.08.02.",
+            "Guia de remessa nº 5086 foi atualizada.",
+            "Novo processo administrativo aberto pelo requerente 58164.",
+        ];
+
+        function carregarAlertas() {
+            const alertasContainer = document.getElementById('alertasContainer');
+            alertasContainer.innerHTML = ''; // Limpa os alertas anteriores
+
+            if (alertas.length > 0) {
+                const lista = document.createElement('ul');
+                lista.className = 'list-group';
+
+                alertas.forEach((alerta) => {
+                    const item = document.createElement('li');
+                    item.className = 'list-group-item';
+                    item.textContent = alerta;
+                    lista.appendChild(item);
+                });
+
+                alertasContainer.appendChild(lista);
+            } else {
+                alertasContainer.innerHTML = '<p class="text-center text-muted">Nenhum alerta recebido.</p>';
+            }
+        }
+
+        // Simula a chegada de novos alertas a cada 10 segundos
+        setInterval(() => {
+            const novoAlerta = `Novo alerta recebido em ${new Date().toLocaleTimeString()}.`;
+            alertas.push(novoAlerta);
+            carregarAlertas();
+        }, 10000);
+
+        // Carrega os alertas ao abrir o modal
+        document.getElementById('alertasModal').addEventListener('show.bs.modal', carregarAlertas);
+    </script>
+
+     <!-- Bootstrap JS -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+     <script>
+         // Habilitar submenus no Bootstrap 5
+         document.querySelectorAll('.dropdown-submenu').forEach(function (submenu) {
+             submenu.addEventListener('mouseenter', function () {
+                 let dropdown = submenu.querySelector('.dropdown-menu');
+                 dropdown.classList.add('show');
+             });
+             submenu.addEventListener('mouseleave', function () {
+                 let dropdown = submenu.querySelector('.dropdown-menu');
+                 dropdown.classList.remove('show');
+             });
+         });
+
+         // Adiciona o evento de clique no botão "Sair"
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+            window.location.href = "index.html"; // Redireciona para a tela de login
+        });
+     </script>
+</body>
+</html>
